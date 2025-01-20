@@ -1,3 +1,5 @@
+# Linked list class for doing linked list problems
+
 class Node:
     def __init__(self, data=0, nnext=None):
         self.data = data
