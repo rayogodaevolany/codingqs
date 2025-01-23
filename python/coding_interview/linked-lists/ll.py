@@ -1,28 +1,35 @@
-# Linked list class for doing linked list problems
+# Node and Linked list class for doing linked list problems
 
 class Node:
-    def __init__(self, data=0, nnext=None):
+    def __init__(self, data=0, nxt=None):
         self.data = data
-        self.next = nnext
+        self.next = nxt
 
+class LinkedList:
+    def __init__(self, array):
+        self.head = Node(array[0])
+        tmp = self.head
+        for data in array[1:]:
+            tmp.next = Node(data)
+            tmp = tmp.next
 
-def createLinkedList(array):
-    head = Node(array[0])
-    node = head
-    for data in array[1:]:
-        node.next = Node(data)
-        node = node.next
-    return head
+    def getStart(self):
+        return self.head
 
-def printPretty(head):
-    array = []
-    array.append(head.data)
-    while head.next:
-        array.append(head.next.data)
-        head = head.next
-    print(array)
-    return array
+    def makeLoop(self, offset):
+        tmp = self.head
+        for _ in range(offset):
+            tmp = tmp.next
+        pointer = tmp
+        while pointer.next:
+            pointer = pointer.next
+        pointer.next = tmp
 
-
-n1 = ll.createLinkedList([0,1,1,1,2,3,4])
-n2 = ll.createLinkedList([0,2,3,4])
+    def printList(self):
+        array = []
+        tmp = self.head
+        while tmp:
+            array.append(tmp.data)
+            tmp = tmp.next
+        print(array)
+        return array
