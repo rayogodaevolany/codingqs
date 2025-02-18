@@ -3,3 +3,5 @@ venv/
 devbox.json
 devbox.lock
 
+*.swp
+
