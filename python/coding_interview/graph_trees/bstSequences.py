@@ -4,48 +4,57 @@ class Node:
         self.left = None
         self.right = None
 
-def rec(node):
-    if not node:
-        return []
+def recbst(node):
     if not node.right and not node.left:
         return [[node.val]]
     res = []
     nodeArr = [node.val]
-    leftAll = rec(node.left)
-    for x in leftAll:
-        res.append(nodeArr + x)
-    rightAll = rec(node.right)
-    for x in rightAll:
-        res.append(nodeArr + x)
+    if node.left:
+        leftAll = recbst(node.left)
+        for x in leftAll:
+            res.append(nodeArr + x)
+    if node.right:
+        rightAll = recbst(node.right)
+        for x in rightAll:
+            res.append(nodeArr + x)
     return res
 
-
-def insert(node, value):
-    if not node:
-        return Node(value)
-    if node.val == value:
-        return node
-    # bst with same vals are to the left
-    if node.val >= value:
-        node.left = insert(node.left, value)
-    else:
-        node.right = insert(node.right, value)
+def rec(array):
+    if not array:
+        return None
+    l = len(array)//2
+    node = Node(None)
+    node.left = rec(array[:l])
+    node.val = array[l]
+    node.right = rec(array[l+1:])
     return node
 
-def createBST(array):
-    head = Node(array[len(array)//2])
-    print(head.val)
-    for x in array:
-        insert(head, x)
 
-def inorder(head):
-    if head:
-        inorder(head.left)
-        print(head.val, end=" ")
-        inorder(head.right)
-    
-array = [4,3,2,5,1,6,7,7,8]
-head = createBST(array)
-inorder(head)
-print(rec(head))
+def printList(listhead):
+    queue = [listhead]
+    print(listhead.val)
+
+    while queue:
+        queuelength = len(queue)
+        arr = []
+        for _ in range(queuelength):
+            current = queue.pop(0)
+            if current.left:
+                queue.append(current.left)
+                arr.append(current.left.val)
+            else:
+                arr.append('None')
+            if current.right:
+                queue.append(current.right)
+                arr.append(current.right.val)
+            else:
+                arr.append('None')
+        print(arr)
+
+
+array = [1,2,3,4,5,6,7,8,9,10,11]
+head = rec(array)
+print(recbst(head))
+
+
 
