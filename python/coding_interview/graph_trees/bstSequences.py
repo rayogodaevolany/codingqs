@@ -1,23 +1,50 @@
+from linkedlist import Node, LinkedList
+
 class Node:
     def __init__(self, val):
         self.val = val
         self.left = None
         self.right = None
 
-def recbst(node):
-    if not node.right and not node.left:
-        return [[node.val]]
+def bst(node):
     res = []
-    nodeArr = [node.val]
-    if node.left:
-        leftAll = recbst(node.left)
-        for x in leftAll:
-            res.append(nodeArr + x)
-    if node.right:
-        rightAll = recbst(node.right)
-        for x in rightAll:
-            res.append(nodeArr + x)
+    if not node:
+        tmp = LinkedList()
+        res = tmp + res
+        return res
+
+    # create prefix
+    prefix = LinkedList()
+    prefix.insert(node.val)
+
+    leftAll = bst(node.left)
+    rightAll = bst(node.right)
+    for left in leftAll:
+        for right in rightAll:
+            weaved = []
+            weaved.extend(weaveLists(left, right, weaved, prefix))
+            res.extend(weaved)
     return res
+
+def weaveLists(first, second, results, prefix):
+    if first.first == None or second.first == None:
+        clone = prefix.clone()
+        clone.extend(first)
+        clone.extend(second)
+        res = clone + results;
+        return res
+
+    headFirst = first.removeFirst()
+    prefix.insert(headFirst)
+    weaveLists(first, second, results, prefix)
+    prefix.removeLast(headFirst)
+    first.addFirst(headFirst)
+
+    headSecond = second.removeFirst()
+    prefix.insert(headSecond)
+    weaveLists(first, second, results, prefix)
+    prefix.removeLast(headSecond)
+    second.addFirst(headSecond)
 
 def rec(array):
     if not array:
@@ -54,7 +81,7 @@ def printList(listhead):
 
 array = [1,2,3,4,5,6,7,8,9,10,11]
 head = rec(array)
-print(recbst(head))
+print(bst(head))
 
 
 
