@@ -1,51 +1,87 @@
+from linkedlist import Node, LinkedList
+
 class Node:
     def __init__(self, val):
         self.val = val
         self.left = None
         self.right = None
 
-def rec(node):
-    if not node:
-        return []
-    if not node.right and not node.left:
-        return [[node.val]]
+def bst(node):
     res = []
-    nodeArr = [node.val]
-    leftAll = rec(node.left)
-    for x in leftAll:
-        res.append(nodeArr + x)
-    rightAll = rec(node.right)
-    for x in rightAll:
-        res.append(nodeArr + x)
+    if not node:
+        tmp = LinkedList()
+        res = tmp + res
+        return res
+
+    # create prefix
+    prefix = LinkedList()
+    prefix.insert(node.val)
+
+    leftAll = bst(node.left)
+    rightAll = bst(node.right)
+    for left in leftAll:
+        for right in rightAll:
+            weaved = []
+            weaved.extend(weaveLists(left, right, weaved, prefix))
+            res.extend(weaved)
     return res
 
+def weaveLists(first, second, results, prefix):
+    if first.first == None or second.first == None:
+        clone = prefix.clone()
+        clone.extend(first)
+        clone.extend(second)
+        res = clone + results;
+        return res
 
-def insert(node, value):
-    if not node:
-        return Node(value)
-    if node.val == value:
-        return node
-    # bst with same vals are to the left
-    if node.val >= value:
-        node.left = insert(node.left, value)
-    else:
-        node.right = insert(node.right, value)
+    headFirst = first.removeFirst()
+    prefix.insert(headFirst)
+    weaveLists(first, second, results, prefix)
+    prefix.removeLast(headFirst)
+    first.addFirst(headFirst)
+
+    headSecond = second.removeFirst()
+    prefix.insert(headSecond)
+    weaveLists(first, second, results, prefix)
+    prefix.removeLast(headSecond)
+    second.addFirst(headSecond)
+
+def rec(array):
+    if not array:
+        return None
+    l = len(array)//2
+    node = Node(None)
+    node.left = rec(array[:l])
+    node.val = array[l]
+    node.right = rec(array[l+1:])
     return node
 
-def createBST(array):
-    head = Node(array[len(array)//2])
-    print(head.val)
-    for x in array:
-        insert(head, x)
 
-def inorder(head):
-    if head:
-        inorder(head.left)
-        print(head.val, end=" ")
-        inorder(head.right)
-    
-array = [4,3,2,5,1,6,7,7,8]
-head = createBST(array)
-inorder(head)
-print(rec(head))
+def printList(listhead):
+    queue = [listhead]
+    print(listhead.val)
+
+    while queue:
+        queuelength = len(queue)
+        arr = []
+        for _ in range(queuelength):
+            current = queue.pop(0)
+            if current.left:
+                queue.append(current.left)
+                arr.append(current.left.val)
+            else:
+                arr.append('None')
+            if current.right:
+                queue.append(current.right)
+                arr.append(current.right.val)
+            else:
+                arr.append('None')
+        print(arr)
+
+
+array = [1,2,3,4,5,6,7,8,9,10,11]
+head = rec(array)
+print(bst(head))
+
+
 
