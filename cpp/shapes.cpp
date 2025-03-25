@@ -74,9 +74,23 @@ int s3bottom() {
     }
     return 0;
 }
+
+int s4(){
+    int rows = 7;
+    for( int i = 0; i < rows; i++) {
+        for (int space = 0; space < i; space++){
+                cout << " ";
+        }
+        cout << "#";
+        cout << "\n";
+    }
+
+
+    return 0;
+}
+
 int main () {
-    s3top();
-    s3bottom();
+    s4();
 
 
 
