@@ -1,5 +1,5 @@
 decoder:
-	g++ decoder.cpp -o ./bin/decoder
+	g++ shapes.cpp -o ./bin/shapes
 
-run: ./bin/decoder
-	./bin/decoder
+run: ./bin/shapes
+	./bin/shapes
