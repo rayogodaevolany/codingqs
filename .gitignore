@@ -3,6 +3,7 @@ venv/
 devbox.json
 devbox.lock
 .DS_Store
+Makefile
 
 *.swp
 

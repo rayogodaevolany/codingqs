@@ -1,5 +1,5 @@
 decoder:
-	g++ shapes.cpp -o ./bin/shapes
+	g++ 10digitIsbn.cpp -o ./bin/10digitIsbn
 
-run: ./bin/shapes
-	./bin/shapes
+run: ./bin/10digitIsbn
+	./bin/10digitIsbn

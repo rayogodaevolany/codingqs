@@ -16,6 +16,7 @@ int s1(){
 
     return 0;
 }
+
 int s2(){
     int num = 4;
 
@@ -28,12 +29,51 @@ int s2(){
             }
         cout << "\n";
     }
+
+    int num2 = 4;
+
+    for(int i = 0; i < num2; i++){
+        for(int m = 0; m < i; m++){
+            cout << " ";
+        }
+        for(int t = 0; t < 8 - 2*i; t++){
+            cout << "#";
+            }
+        cout << "\n";
+    }
+
     
-    s1();
     return 0;
 }
 
-int s3top() {
+int s2fix(){
+    int num = 8;
+
+    for(int i = 0; i < num; i++){
+        for(int m = 0; m < abs(4 - i); m++){
+            cout << " ";
+        }
+        for(int t = 0; t < 2*(4-abs(4 - i)); t++){
+            cout << "#";
+            }
+        cout << "\n";
+    }
+
+    // for(int i = 0; i < num; i++){
+    //     for(int m = 0; m < i; m++){
+    //         cout << " ";
+    //     }
+    //     for(int t = 0; t < 8 - 2*i; t++){
+    //         cout << "#";
+    //         }
+    //     cout << "\n";
+    // }
+
+    
+    return 0;
+}
+
+int s3() {
     int num = 5;
 
     for(int i = 0; i < num; i++){
@@ -51,12 +91,6 @@ int s3top() {
             }
         cout << "\n";
     }
-    return 0;
-}
-
-int s3bottom() {
-    int num = 5;
-
     for(int i = 0; i < num; i++){
         for(int m = 0; m < 4 - i; m++){
             cout << " ";
@@ -77,9 +111,12 @@ int s3bottom() {
 
 int s4(){
     int rows = 7;
-    for( int i = 0; i < rows; i++) {
-        for (int space = 0; space < i; space++){
-                cout << " ";
+    for( int row = 0; row < rows; row++) {
+        if (row > 0 && row < 6) {
+            cout << " ";
+        } 
+        if (row > 1 && row < 5){
+            cout << " ";
         }
         cout << "#";
         cout << "\n";
@@ -90,7 +127,7 @@ int s4(){
 }
 
 int main () {
-    s4();
+    s3();
 
 
 
