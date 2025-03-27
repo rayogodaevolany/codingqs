@@ -1,5 +1,5 @@
-decoder:
-	g++ 10digitIsbn.cpp -o ./bin/10digitIsbn
+file:
+	g++ decimaltobinary.cpp -o ./bin/decimaltobinary
 
-run: ./bin/10digitIsbn
-	./bin/10digitIsbn
+run: ./bin/decimaltobinary
+	./bin/decimaltobinary
