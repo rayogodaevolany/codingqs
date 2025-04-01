@@ -1,5 +1,5 @@
 file:
-	g++ decimaltobinary.cpp -o ./bin/decimaltobinary
+	g++ -std=c++11 lineStat.cpp -o ./bin/lineStat
 
-run: ./bin/decimaltobinary
-	./bin/decimaltobinary
+run: ./bin/lineStat
+	./bin/lineStat
