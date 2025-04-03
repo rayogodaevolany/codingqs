@@ -1,5 +1,5 @@
 file:
-	g++ -std=c++11 lineStat.cpp -o ./bin/lineStat
+	g++ -std=c++11 sort.cpp -o ./bin/sort
 
-run: ./bin/lineStat
-	./bin/lineStat
+run: ./bin/sort
+	./bin/sort
