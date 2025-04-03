@@ -1,5 +1,5 @@
 file:
-	g++ -std=c++11 sort.cpp -o ./bin/sort
+	g++ -std=c++11 sieveOfEratosthenes.cpp -o ./bin/sieveOfEratosthenes
 
-run: ./bin/sort
-	./bin/sort
+run: ./bin/sieveOfEratosthenes
+	./bin/sieveOfEratosthenes
