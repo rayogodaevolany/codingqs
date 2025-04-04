@@ -1,5 +1,5 @@
 file:
-	g++ -std=c++11 sieveOfEratosthenes.cpp -o ./bin/sieveOfEratosthenes
+	g++ -std=c++11 hexConverter.cpp -o ./bin/hexConverter
 
-run: ./bin/sieveOfEratosthenes
-	./bin/sieveOfEratosthenes
+run: ./bin/hexConverter
+	./bin/hexConverter
