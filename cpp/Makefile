@@ -4,3 +4,4 @@ file:
 
 run: ./bin/${filename}
 	./bin/${filename}
+

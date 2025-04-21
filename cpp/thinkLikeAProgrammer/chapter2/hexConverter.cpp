@@ -38,15 +38,17 @@ string convertToHex(string num){
     while (copy != 0) {
     //     get the quotient 
         quotient = copy/16;
-    //     convert quotient into hex character
-        quotient = singleHex(quotient);
-    //     add quotient to the back of hexNum
-        hexNum.push_back(quotient);
+        // get the remainder
+        int remainder = copy % 16;
+    //     convert remainder into hex character
+        remainder = singleHex(remainder);
+    //     add remainder to the back of hexNum
+        hexNum.push_back(remainder);
     //     make the copy equal to the remainder
-        copy = copy%16;
+        copy = quotient;
     }
     // loop through hexNum 
-    for (int i = 0; i < hexNum.size();i++){
+    for (int i = hexNum.size(); i >= 1;i--){
     //     concatenate the chars into a string
         res += hexNum[i];
 
