@@ -1,5 +1,5 @@
 file:
-	g++ -std=c++11 hexConverter.cpp -o ./bin/hexConverter
+	g++ -std=c++11 medianAgent.cpp -o ./bin/medianAgent
 
-run: ./bin/hexConverter
-	./bin/hexConverter
+run: ./bin/medianAgent
+	./bin/medianAgent
