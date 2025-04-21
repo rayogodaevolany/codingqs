@@ -1,5 +1,7 @@
+filename = shift_only
 file:
-	g++ -std=c++11 medianAgent.cpp -o ./bin/medianAgent
+	g++ -std=c++11 ${filename}.cpp -o ./bin/${filename}
 
-run: ./bin/medianAgent
-	./bin/medianAgent
+run: ./bin/${filename}
+	./bin/${filename}
+
