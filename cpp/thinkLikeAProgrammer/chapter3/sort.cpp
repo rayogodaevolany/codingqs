@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 
-int* selectionSort(int inputarr[], int size) {
+int* insertionSort(int inputarr[], int size) {
     int *arr = new int[size];
     for(int i = 0; i < 10; i++){
         arr[i] = inputarr[i];
@@ -27,13 +27,13 @@ int compareFunc( const void* voidA, const void* voidB){
 int main() {
     const int ARRAY_SIZE = 10;
     int intArray[ARRAY_SIZE] = {3, 4, 2, 12, -4, 0, -57, 309845, -283, 2};
-    enum sortMethod {SELECTION, QSORT};
+    enum sortMethod {INSERTION, QSORT};
     sortMethod s = QSORT;
 
     int* sortedArray;
     switch(s) {
-        case SELECTION: 
-            sortedArray = selectionSort(intArray, ARRAY_SIZE);
+        case INSERTION: 
+            sortedArray = insertionSort(intArray, ARRAY_SIZE);
             for (int i = 0; i < ARRAY_SIZE; i++){
                 cout << sortedArray[i] << " ";
             }
