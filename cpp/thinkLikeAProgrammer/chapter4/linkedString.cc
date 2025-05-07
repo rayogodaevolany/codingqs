@@ -44,6 +44,31 @@ void print(characterArray head){
 	cout << endl;
 	
 }
+
+void cat(characterArray& head1, characterArray head2){
+    // go to the end of head1
+    Node * pointer = head1;
+    while(pointer->next != NULL){
+        pointer = pointer->next;
+    }
+
+    // copy each node of head2 and append the new node to head1
+        if(head2->next == NULL) return;
+        Node * str2Pointer = head2->next;
+    while(str2Pointer->next != NULL){
+        Node * newNode = new Node;
+        // add the character from the second list
+        newNode->character = str2Pointer->character;
+        // make the end of the first list point to this new node
+        pointer->next = newNode;
+        // move the first pointer to its next value
+        pointer = pointer->next;
+        // move the second pointer to its next value
+        str2Pointer = str2Pointer->next;
+        newNode = NULL;
+    }
+    pointer->next = NULL;
+}
 void test(){
 	// make strings
 	// create new string with linkedlist
@@ -60,10 +85,36 @@ void test(){
 
 	n1 = n2 = NULL;
 
+    //make hello string
+    characterArray hello = new Node;
+    Node *n3 = new Node;
+    Node *n4 = new Node;
+    Node *n5 = new Node;
+    Node *n6 = new Node;
+    Node *n7 = new Node;
+
+    n3->character = 'h';
+    n4->character = 'e';
+    n5->character = 'l';
+    n6->character = 'l';
+    n7->character = 'o';
+
+    hello->next = n3;
+    n3->next = n4;
+    n4->next = n5;
+    n5->next = n6;
+    n6->next = n7;
+    n7->next = NULL;
+
+    n3 = n4 = n5 =n6 =n7 =NULL;
+
 	print(hi);
 	append('x', hi);
 	cout << charAt(3, hi)<< endl;
 	print(hi);
+    print(hello);
+    cat(hi, hello);
+    print(hi);
 
 
 }
