@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+//THE FIRST NODES SHOULDNT BE NODES THEY SHOULD JUST BE POINTERS
 // struct for linkedInt
 struct Node {
     int num;
