@@ -87,12 +87,17 @@ class studentCollection{
         };
     public:
         studentCollection();
+        ~studentCollection();
+        studentCollection(const studentCollection &original);
+        studentCollection& operator=(const studentCollection &rhs);
         void addRecord(studentRecord newStudent);
         studentRecord recordWithNumber(int idNum);
         void removeRecord(int idNum);
     private:
         typedef studentNode * studentList;
         studentList _listHead;
+        void deleteList(studentList &listPtr);
+        studentList copiedList(const studentList original);
 };
 
 studentCollection::studentCollection(){
@@ -118,6 +123,67 @@ studentRecord studentCollection::recordWithNumber(int idNum){
     }
 }
 
+void studentCollection::removeRecord(int idNum){
+    studentNode * loopPtr = _listHead;
+    studentNode * trailing = NULL;
+    while(loopPtr != NULL && loopPtr->studentData.studentID() != idNum){
+        trailing = loopPtr;
+        loopPtr = loopPtr->next;
+    }
+    if (loopPtr == NULL) return;
+    if (trailing ==NULL) {
+        _listHead = _listHead->next;
+    } else {
+        trailing->next = loopPtr->next;
+    }
+    delete loopPtr;
+}
+
+void studentCollection::deleteList(studentList &listPtr){
+    while(listPtr!=NULL){
+        studentNode * tmp = listPtr;
+        listPtr = listPtr->next;
+        delete tmp;
+    }
+}
+
+studentCollection::studentList studentCollection::copiedList(studentList original){
+    if (original == NULL) return NULL;
+
+    studentList newList = new studentNode;
+    newList->studentData = original->studentData;
+
+    studentNode * oldLoopPtr = original->next;
+    studentNode * newLoopPtr = newList;
+
+    while(oldLoopPtr != NULL){
+        newLoopPtr->next = new studentNode;
+        newLoopPtr = newLoopPtr->next;
+        
+        newLoopPtr->studentData = oldLoopPtr->studentData;
+
+        oldLoopPtr= oldLoopPtr->next;
+    }
+    newLoopPtr->next = NULL;
+    return newList;
+}
+
+studentCollection::~studentCollection(){
+    deleteList(_listHead);
+}
+
+
+studentCollection& studentCollection::operator=(const studentCollection &rhs){
+    if(this != &rhs){
+        deleteList(_listHead);
+        _listHead = copiedList(rhs._listHead);
+    }
+    return *this;
+}
+
+studentCollection::studentCollection(const studentCollection &original){
+    _listHead = copiedList(original._listHead);
+}
 
 void test() {
     studentCollection s;
@@ -131,5 +197,6 @@ void test() {
     s.removeRecord(4875);
 }
 int main(){
+    test();
     return 0;
 }
