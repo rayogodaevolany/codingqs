@@ -1,6 +1,57 @@
 #include <iostream>
-#include<vector>
+#include <vector>
 using namespace std;
+
+void answer(){
+    int N, M; cin >>N>>M;
+    vector<vector<int>>vec(M);
+
+    // loop bulbs amount times
+    for(int i=0;i<M;i++){
+        int k; cin >>k;
+        // resize every int vector to size k
+        vec[i].resize(k);
+        for(int j=0;j<N;j++){
+            // get switch name
+            cin>>vec[i][j];
+            // convert from 1-index to zero index
+            --vec[i][j];
+        }
+    }
+
+    // parity vector
+    vector<int> p(M);
+    for(int i=0;i<M;i++)cin >> p[i];
+    
+    int ans = 0;
+    // bit shift by N
+    for(int i = 0; i < (1 << N); i++){
+    // every subset of N in binary
+        bool ok = true;
+        for(int j = 0; j < M; j++){
+            // every bulb
+            int c = 0;
+            for(int id: vec[j]){
+                //every switch in each bulb
+                if((i >> id) & 1){
+                    // check if it turns on
+                    //check if i is on at index id
+                    c++;
+                }
+            }
+            // does the parity align with what it should be?
+            c %= 2;
+            if(c != p[j]){
+                // if any of them is false then the flag is false
+                ok = false;
+            }
+        }
+        if(ok){
+            ans++;
+        }
+    }
+    cout << ans << endl;
+}
 
 int main() {
     int switchesAmount, bulbsAmount, count = 0;

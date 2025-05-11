@@ -173,7 +173,7 @@ studentCollection::~studentCollection(){
 }
 
 
-studentCollection& studentCollection::operator=(const studentCollection &rhs){
+studentCollection&  studentCollection::operator=(const studentCollection& rhs){
     if(this != &rhs){
         deleteList(_listHead);
         _listHead = copiedList(rhs._listHead);
