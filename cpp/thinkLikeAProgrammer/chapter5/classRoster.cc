@@ -2,11 +2,11 @@
 #include<string>
 using namespace std;
 
-struct student{
-    int grade;
-    int studentID;
-    string name;
-};
+// struct student{
+//     int grade;
+//     int studentID;
+//     string name;
+// };
 
 class studentRecord {
     public: 
