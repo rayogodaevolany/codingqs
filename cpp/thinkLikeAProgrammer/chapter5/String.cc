@@ -1,6 +1,4 @@
 #include <iostream>
-
-
 //I feel like I was supposed to do this with the linkedlist version of the string
 
 using namespace std;
@@ -14,13 +12,14 @@ class String {
         String(char str[], size_t size);
         ~String();
         String& operator=(const String & rhs);
+        char operator[](int index);
         arrayString getString();
         void setString(char str[], size_t size);
         void append(char newChar);
         void concatenate(const arrayString& b);
-        char characterAt(int index);
     private:
         arrayString _head;
+        char characterAt(int index);
         int length(const arrayString& s);
         void deleteString(arrayString head);
         arrayString copiedString(const arrayString& original);
@@ -63,6 +62,11 @@ String& String::operator=(const String & rhs){
     }
 
     return *this;
+}
+
+char String::operator[](int index){
+    // get index using charAt
+    return characterAt(index);
 }
 
 void String::setString(char str[], size_t size){
@@ -175,7 +179,7 @@ int main(){
     char arr[3] = {'u','h','u'};
 
     String second(arr, 3);
-    cout << str.getString() << " "<< second.getString()<< " "<< second.characterAt(0) << endl;
+    cout << str.getString() << " "<< second.getString()<< " "<< second[0] << endl;
 
     char world[5] = {'w','o','r','l','d'};
     second.setString(world, 5);
