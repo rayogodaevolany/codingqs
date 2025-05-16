@@ -8,3 +8,6 @@ Makefile
 *.swp
 bin/
 
+CMakeFiles/
+# cpp/thinkLikeAProgrammer/my_project/build/
+**/build

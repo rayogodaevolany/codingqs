@@ -1,0 +1,181 @@
+#include <iostream>
+#include "../include/customString.h"
+// #include "customString.h"
+using namespace std;
+
+customString::customString(){
+    // new string that terminates in 0 still.
+    // I don't know if that works well actually
+    _head = new char[1];
+    _head[0] = 0;
+}
+
+customString::customString(const customString & original){
+    _head = copiedString(original._head);
+}
+
+customString::customString(char str[], size_t size){
+    _head = new char[size + 1];
+    // copy all elements
+    copyCharacters(_head, str, size);
+    // should be size for the right index of the last place
+    _head[size] = 0;
+}
+
+customString::arrayString customString::getString(){
+    return _head;
+}
+
+customString::~customString(){
+    deleteString(_head);
+}
+
+
+customString& customString::operator=(const customString & rhs){
+    if(this != &rhs){
+        deleteString(_head);
+        _head = copiedString(rhs._head);
+    }
+
+    return *this;
+}
+
+char customString::operator[](int index){
+    // get index using charAt
+    return _head[index];
+}
+
+void customString::setString(char str[], size_t size){
+    _head = new char[size + 1];
+    // copy all elements
+    copyCharacters(_head, str, size);
+    // should be size for the right index of the last place
+    _head[size] = 0;
+}
+
+//length finds the length of a given arrayString string
+// input: string
+// output: int
+
+int customString::length(const arrayString& s){
+    // initiate length variable
+    int length = 0;
+    // loop over the string until null guard
+    while(s[length] != 0){
+        // increment the length variable
+        length++;
+    }
+    //return the length
+    return length;
+}
+
+//append adds a character to end of string
+//input: character, arrayString
+//output: side effect change the passed in string
+
+void customString::append(char newChar){
+    // get length of s
+    int count = length(_head);
+    // allocated a new string with size plus one (need two for termination)
+    arrayString newString = new char[count + 2];
+    // loop through the original array and populate the new string
+    copyCharacters(newString, _head, count);
+
+    // add new char to the last position
+    newString[count] = newChar;
+    newString[count + 1] = 0;
+
+    // deallocate memory of old string
+    deleteString(_head);
+    // point the pointer to the new string
+    _head = newString;
+    }
+
+
+//concatenate takes two strings, adds the second onto the end of the first
+//input: arrayString, arrayString
+//output: side effect; change the memory address of the first string to new string
+void customString::concatenate(const arrayString& b){
+    // get length of a and b 
+    int lenA = length(_head);
+    int lenB = length(b);
+    int sum = lenA + lenB;
+
+    // create a new arrayString of length a + b
+    arrayString cat = new char[sum + 1];
+    // loop through a and loop through b
+    copyCharacters(cat, _head, lenA);
+    copyCharacters(cat, _head, lenB);
+
+    // add a zero to the end
+    cat[sum] = 0;
+    // deallocate memory of a
+    deleteString(_head);
+    // point pointer to new string
+    _head = cat;
+}
+
+
+//removes a given number of characters from a certain index
+//input index and ammount
+//output void
+void customString::remove(int index, int numRemove){
+
+    // find length of new array
+    int newLength;
+    int oldLength;
+    oldLength = length(_head);
+    newLength = oldLength - numRemove;
+    
+    // check for valid index 
+    if ( index < 0 || index > oldLength ){
+        return;
+    }
+
+    //make a new string with the right values
+    arrayString newString = new char[newLength];
+    //loop over start like normal
+    copyCharacters(newString, _head, index);
+
+    // if removed goes beyond length of string
+    // then skip this part otherwise run
+    if ((index + numRemove) < oldLength) {
+        // loop over the after the index
+        // have to use the right approach if there is none
+        int i = index + numRemove;
+        while(_head[i] != 0){
+            newString[i - numRemove] = _head[i];
+            i++;
+        }
+        newString[i - numRemove] = 0;
+
+    }  else {
+        // set the last value to zero
+        newString[index] = 0;
+    }
+
+    deleteString(_head);
+    _head = newString;
+}
+
+
+void customString::deleteString(arrayString head){
+    // remove string
+    delete[] head;
+    head = NULL;
+}
+
+customString::arrayString customString::copiedString(const arrayString& original){
+    int len;
+    len = length(original);
+    arrayString copy = new char[len];
+    copyCharacters(copy, original, len);
+    return copy;
+}
+
+void customString::copyCharacters(arrayString& dest, const arrayString& src, int length){
+    // copy over 
+    for(int i = 0; i < length; i++){
+        dest[i] = src[i];
+    }
+}
