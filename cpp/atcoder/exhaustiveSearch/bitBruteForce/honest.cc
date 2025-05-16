@@ -6,16 +6,19 @@ using namespace std;
 //max subset where people agree
 int main(){
     int people; cin >> people;
+
     // bit table of who is honest
     vector<int> honest(people, 1);
     vector<vector<pair<int, int>>> verdicts(people);
+
     for (int i = 0; i < people; i++){
         // for all people
         int testimonies; cin >> testimonies;
         for (int j = 0; j < testimonies; j++){
             // for all testimonies
-            int person; cin >> person;
+           int person; cin >> person;
             int verdict; cin >> verdict;
+
             verdicts[i].emplace_back(person, verdict);
         }
     }
