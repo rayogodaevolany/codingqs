@@ -18,11 +18,34 @@ recordCollection& recordCollection::operator=(const recordCollection & rhs){
     return *this;
 }
 
-recordCollection::listNode recordCollection::getRecord(){
+int recordCollection::length(){
+    listNode * pointer = _head;
+    int length = 0;
 
+    while(pointer != nullptr){
+        length++;
+        pointer = pointer->next;
+    }
+
+    return length;
 }
 
-void recordCollection::setRecord(listNode record){
+// method returns array of the list values
+int* recordCollection::grades(){
+    // run through every node adding to vector
+    //
+    listNode * pointer = _head;
+    int len; len = length();
+    int * grades = new int[len];
+
+    int i = 0;
+    while(pointer != nullptr){
+        grades[i] = pointer->grade;
+        pointer = pointer->next;
+        i++;
+    }
+
+    return grades;
 }
 
 // addRecord adds a record to the end of studentCollection
@@ -109,6 +132,29 @@ recordCollection::studentCollection recordCollection::copyList(listNode * head){
 
 }
 
-recordCollection::studentCollection recordCollection::RecordsWithinRange(double low, double high){
+// routine runs through the collection picking up those that fall
+// through the filter and then create a new collection with those records.
+// inclusive
+// input: filter ranges
+// output: new collection
+recordCollection recordCollection::RecordsWithinRange(double low, double high){
+    // create new recordCollection
+    recordCollection newrc;
+
+    // if invalid low and high
+    if( low > high) return newrc;
+
+    // create pointer
+    listNode * pointer = _head;
+
+    // loop to add those that fit
+    while(pointer != nullptr){
+        if(pointer->grade >= low && pointer->grade <= high){
+            newrc.addRecord(pointer->grade, pointer->studentNum);
+        }
+        pointer = pointer->next;
+    }
+
+    return newrc;
 }
 

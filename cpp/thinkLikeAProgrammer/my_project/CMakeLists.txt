@@ -47,6 +47,7 @@ target_link_libraries(test_customString
 )
 target_link_libraries(test_recordCollection
   recordCollection
+  GTest::gmock
   GTest::gtest_main
   )
 
