@@ -205,21 +205,27 @@ float medianWrapper(treePtr root){
 
 
 // recurse over entire tree adding each node's value to a hashmap
-int modeMap(treePtr root, unordered_map<int, int>& hashmap){
+void modeMap(treePtr root, unordered_map<int, int>& hashmap){
     // basecase
-    if (root == nullptr) return 0;
+    if (root == nullptr) return;
     // call recursively and pass on hashmap
+    modeMap(root->left, hashmap);
+    modeMap(root->right, hashmap);
+
     // add current node to hashmap
-    return 0;
+        hashmap[root->data]++;
+    return;
 }
 
 int modeWrapper(treePtr root){
+    if (root == nullptr) return 0;
     // make hashmap
     unordered_map<int, int> hashmap;
     // fill out hashmap
      modeMap(root, hashmap);
 
-     int most;
+     // not initialized to anything
+     int most = 0;
      int count = 0;
      // iterative version
      for (auto it : hashmap){
@@ -261,8 +267,9 @@ void test() {
     Node * testTree = buildTestTree();
     float avg =  average(testTree);
     int medianTest = medianWrapper(testTree);
-    cout << avg << " " << medianTest <<  endl;
+    int mode = modeWrapper(testTree);
 
+    cout << avg << " " << medianTest << " " << mode <<  endl;
 
 }
 
