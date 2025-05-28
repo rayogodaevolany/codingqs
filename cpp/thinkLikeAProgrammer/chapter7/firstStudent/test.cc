@@ -1,6 +1,7 @@
 #include <iostream>
 #include "scIterator.h"
 #include "studentCollection.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -10,40 +11,90 @@ void sortAlgo(studentRecord arr[], size_t arraySize){
     int start = 0;
     int end = arraySize;
 
-
-    // while loop that starts with a flag that is true so that it at least checks once
+    // for every value starting at index 1
     for (int i = start + 1; i < end; i++){
-        if (arr[i].grade() == -1) continue;
-        bool flag = true;
-        int j = i;
-        while (flag){
-            //  checks for if it is in valid range
-            if (j <= start) flag = false;
-            //  checks for if it is the last one that is valid
-            for (int m = j; arr[m] != -1 && arr[m].grade() < arr[j].grade(); m--){
-                
+        // if the indexed point is valid
+        if (arr[i].grade() != -1){
+            // create a right pointer
+            int rightswap = i;
+            // loop decrementing from one right of indexed point
+            // until the out of range
+            // or pointers are right/ looppointer is invalid
+            for (int leftswap = i - 1;
+                    leftswap >= start
+                    && (arr[leftswap].grade() > arr[rightswap].grade()
+                        || arr[leftswap].grade() == -1);
+                    leftswap--){
+                // if the loop pointer is valid
+                if (arr[leftswap].grade() != -1){
+                    // swap
+                    studentRecord tmp = arr[leftswap];
+                    arr[leftswap] = arr[rightswap];
+                    arr[rightswap] = tmp;
+                    rightswap = leftswap;
+                }
             }
-            //  swaps if necessary
-            //
-            j--;
         }
     }
 
+}
+void sortAlgoBroken(studentRecord arr[], size_t arraySize){
+    // get a studentCollection array
+    int start = 0;
+    int end = arraySize;
+
+    // for every value starting at index 1
     for (int i = start + 1; i < end; i++){
-        // loop while the index is valid, and 
-        // the value before is smaller than the current
-        for (int j = i; j > start && arr[j].grade() < arr[j -1].grade(); j--){
-        // continue swapping the values
-        // the swapped records have to be only valid values
-           studentRecord tmp = arr[j - 1];
-           arr[j - 1] = arr[j];
-           arr[j] = tmp;
+        // find the first non -1 from i - 1
+        int m = i - 1;
+        while (arr[m].grade() == -1){
+            m--;
+        }
+        // keep swapping values until they are in sorted order
+        for (int j = i; j > start && (arr[j].grade() < arr[m].grade() || arr[j].grade() == -1); j--){
+            if (arr[j].grade() != -1){
+                studentRecord tmp = arr[m];
+                arr[m] = arr[j];
+                arr[j] = tmp;
+                // continue onto next valid value
+                m--;
+                while (arr[m].grade() == -1){
+                    m--;
+                }
+            }
         }
     }
 
 }
 
-void sortLibrary(){
+// a comparison function for qsort
+int comp(const void * a, const void * b){
+    studentRecord *asr = (studentRecord *)a;
+    studentRecord *bsr = (studentRecord *)b;
+    return asr->grade() - bsr->grade();
+}
+
+
+void sortLibrary(studentRecord arr[], size_t arr_size){
+    // copy all the records that aren't -1
+    studentRecord * nonNegOnes = new studentRecord[arr_size];
+    int counter = 0;
+    for (int i = 0; i < arr_size; i++){
+        if (arr[i].grade() != -1){
+            nonNegOnes[i] = arr[i];
+            counter++;
+        }
+    }
+    // sort that array
+    qsort(nonNegOnes, counter, sizeof(studentRecord), comp);
+    // copy back into original array where values aren't -1
+    int pointer = 0;
+    for (int i = 0; i<arr_size; i++){
+        if (arr[i].grade() != -1){
+            arr[i] = nonNegOnes[pointer];
+            pointer++;
+        }
+    }
 }
 
 void test() {
