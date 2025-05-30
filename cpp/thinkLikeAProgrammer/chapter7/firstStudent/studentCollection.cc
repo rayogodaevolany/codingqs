@@ -2,15 +2,15 @@
 #include "studentCollection.h"
 #include "scIterator.h"
 using namespace std;
-bool higherGrade(studentRecord r1, studentRecord r2){
+bool studentCollection::higherGrade(studentRecord r1, studentRecord r2){
     return r1.grade() > r2.grade();
 }
 
-bool lowerStudentNumber(studentRecord r1, studentRecord r2){
+bool studentCollection::lowerStudentNumber(studentRecord r1, studentRecord r2){
     return r1.studentID() < r2.studentID();
 }
 
-bool nameComesFirst(studentRecord r1, studentRecord r2){
+bool studentCollection::nameComesFirst(studentRecord r1, studentRecord r2){
     return strcmp(r1.name().c_str(), r2.name().c_str()) < 0;
 }
 
@@ -24,7 +24,7 @@ studentRecord studentCollection::firstStudent(){
     studentRecord first = loopPtr->studentData;
     loopPtr = loopPtr->next;
     while (loopPtr != nullptr){
-        if (_currentPolicy(loopPtr->studentData, first)){
+        if ((this->*_currentPolicy)(loopPtr->studentData, first)){
             first = loopPtr->studentData;
         }
         loopPtr = loopPtr->next;
@@ -133,8 +133,20 @@ studentCollection::studentCollection(const studentCollection &original){
     _listHead = copiedList(original._listHead);
 }
 
-void studentCollection::setFirstStudentPolicy(firstStudentPolicy f){
-    _currentPolicy = f;
+void studentCollection::setFirstStudentPolicy(criteria crit){
+    int criteriaArr[3] = {GRADE, NUMBER, NAME};
+    firstStudentPolicy funcArr[3] = {
+                                &studentCollection::higherGrade,
+                                &studentCollection::lowerStudentNumber,
+                                &studentCollection::nameComesFirst
+                            };
+    int i = 0;
+    while (criteriaArr[i] != crit){
+        i++;
+    }
+
+
+    _currentPolicy = funcArr[i];
 }
 scIterator studentCollection::firstItemIterator(){
     return scIterator(_listHead);

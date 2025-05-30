@@ -31,8 +31,9 @@ class studentCollection{
             studentRecord studentData;
             studentNode * next;
         };
-        typedef bool (* firstStudentPolicy)(studentRecord r1, studentRecord r2);
+        typedef bool (studentCollection::*firstStudentPolicy)(studentRecord r1, studentRecord r2);
     public:
+        enum criteria {GRADE, NUMBER, NAME};
         studentCollection();
         ~studentCollection();
         studentCollection(const studentCollection &copy);
@@ -40,12 +41,15 @@ class studentCollection{
         void addRecord(studentRecord newStudent);
         studentRecord recordWithNumber(int IDnum);
         void removeRecord(int IDnum);
-        void setFirstStudentPolicy(firstStudentPolicy f);
+        void setFirstStudentPolicy(enum criteria);
         studentRecord firstStudent();
         studentRecord recordAt(int position);
         friend class scIterator;
         scIterator firstItemIterator();
     private:
+        bool higherGrade(studentRecord r1, studentRecord r2);
+        bool lowerStudentNumber(studentRecord r1, studentRecord r2);
+        bool nameComesFirst(studentRecord r1, studentRecord r2);
         firstStudentPolicy _currentPolicy;
         typedef studentNode * studentList;
         studentList _listHead;

@@ -97,7 +97,7 @@ void sortLibrary(studentRecord arr[], size_t arr_size){
     }
 }
 
-void test() {
+void testaverage() {
     studentCollection sc;
     studentRecord stu3(84, 1152, "Sue");
     studentRecord stu2(75, 4875, "Ed");
@@ -120,6 +120,19 @@ void test() {
     cout << average << endl;
 }
 
+void test() {
+    studentCollection sc;
+    studentRecord stu3(84, 1152, "Sue");
+    studentRecord stu2(75, 4875, "Ed");
+    studentRecord stu1(98, 2938, "Todd");
+    
+    sc.addRecord(stu3);
+    sc.addRecord(stu2);
+    sc.addRecord(stu1);
+    studentCollection::criteria cri = studentCollection::NAME;
+    sc.setFirstStudentPolicy(cri);
+    cout << sc.firstStudent().name() << endl;
+}
 
 int main(){
     test();
