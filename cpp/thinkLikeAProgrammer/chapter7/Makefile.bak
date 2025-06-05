@@ -1,0 +1,13 @@
+program=bst
+
+test: 
+	make file
+	make run
+
+file:
+	g++ -g -std=c++11 -Wall ${program}.cc -o ./bin/${program}
+
+run: ./bin/${program}
+	./bin/${program}
+
+
