@@ -28,6 +28,7 @@ int main(){
     // all possible subsets of verdicts
     // every combination of who to believe in
     for (int bit = 0; bit< (1<<people); bit++){
+        // COULD JUST START AT ONE
         if (bit == (~0)){
             continue;
         }
