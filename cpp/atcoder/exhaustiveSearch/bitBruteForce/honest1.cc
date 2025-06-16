@@ -7,8 +7,6 @@ using namespace std;
 int main(){
     int people; cin >> people;
 
-    // bit table of who is honest
-    vector<int> honest(people, 1);
     vector<vector<pair<int, int>>> verdicts(people);
 
     for (int i = 0; i < people; i++){
@@ -19,45 +17,52 @@ int main(){
            int person; cin >> person;
             int verdict; cin >> verdict;
 
-            verdicts[i].emplace_back(person, verdict);
+            // convert to zero indexing
+            verdicts[i].emplace_back(person - 1, verdict);
         }
     }
 
     int count = 0;
 
     // all possible subsets of verdicts
-    // every combination of who to believe in
     for (int bit = 0; bit< (1<<people); bit++){
+<<<<<<< HEAD
         // COULD JUST START AT ONE
         if (bit == (~0)){
             continue;
         }
+=======
+        // set the flag every time
+        bool flag = true;
+
+        // set vector everytime 
+        vector<int> honest(people, -1);
+
+        // loop through the bit
+>>>>>>> 344ed87 (Some random stuff)
         for(int i = 0; i< people;i++){
             // if the flag is on
             if(bit & (1 << i)){
                 // find result of testimonies of this person
                 for( auto& ver :verdicts[i]){
-                    if (ver.second == 0){
-                        //if dishonest
-                        // turn off the flag for dis person
-                        honest[ver.first] = 0;
-
+                    if (honest[ver.first] == -1){
+                        honest[ver.first] = ver.second;
+                    } else if( honest[ver.first] != ver.second){
+                        flag = false;
+                        break;
                     }
                 }
             }
+            if(!flag) break;
         }
-        for(auto& h: honest){
-            cout << h << endl;
-        }
-        cout << " big gap " << endl;
         // sum the honest array and see its count
-        int sum = 0;
-        for(int i = 0; i < honest.size(); i++){
-            sum += honest[i];
-            // reset honest array
-            honest[i] = 1;
+
+        // if it isn't contradictory
+        if(flag){
+            int sum = __builtin_popcount(bit);
+            count = max(count, sum);
         }
-        if (count < sum) count = sum;
+
     }
 
     cout << count << endl;
