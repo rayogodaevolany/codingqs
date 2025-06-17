@@ -1,11 +1,11 @@
 #!/bin/bash 
 
 # Create new file with name
-if [ $# -eq 1 ]
+if [ $# -eq 2 ]
 then
-    filename="$(date +%Y%m%d)_$1"
+    filename="$(date +%Y%m%d)_abc$1_$2"
 else 
-    filename="$(date +%Y%m%d)_example"
+    filename="$(date +%Y%m%d)_???_example"
 fi
 
 touch $filename.cc
