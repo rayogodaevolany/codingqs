@@ -1,15 +1,11 @@
 #!/bin/bash 
 
 # Create new file with name
-if [ $# -eq 1 ]
-then
-    filename=$1
-else 
-    filename=example
-fi
+$filename="$(date +%Y%m%d)_abc"
+mkdir -p "$filename/{1..3}"
 
-touch $filename.cc
-
+cd "$filename"
+for ((int i; i < 3; i++)); do
 cat <<EOF >>$filename.cc
 #include <iostream>
 using namespace std;
@@ -25,16 +21,4 @@ int main(){
 EOF
 
 # If makefile exists change the name
-
-FILE="./Makefile"
-if [ -f "$FILE" ]; then
-    echo "Makefile exists"
-else
-    echo "Makefile doesn't exist"
-    exit 1;
-fi
-
-# use sed to change the program name
-sed -i.bak "s/^program=.*/program=${filename}/" Makefile
-
 
