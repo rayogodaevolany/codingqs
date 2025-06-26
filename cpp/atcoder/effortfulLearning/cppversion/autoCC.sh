@@ -3,7 +3,7 @@
 # Create new file with name
 if [ $# -eq 3 ]
 then
-    filename="$(date +%Y%m%d)_abc$1_$2_$3"
+    filename="$(date +%Y%m%d)_abc_$1_$2_$3"
 else 
     filename="$(date +%Y%m%d)_???_example"
 fi
