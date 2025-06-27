@@ -15,7 +15,6 @@ cat <<EOF >>$filename.cc
 using namespace std;
 
 void solve(){
-
 }
 
 int main(){

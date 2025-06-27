@@ -65,7 +65,7 @@ void removeWordsOfWrongLength(list<string> & wordList,
     }
 }
 
-bool numberInPatter(const list<int> & pattern, int number) {
+bool numberInPattern(const list<int> & pattern, int number) {
     list<int>::const_iterator iter;
     iter = pattern.begin();
     while (iter != pattern.end()){
@@ -90,4 +90,94 @@ bool matchesPattern(string word, char letter, list<int> pattern) {
         }
     }
     return true;
+}
+
+void removeWordsWithoutLetter(list<string> & wordList,
+        char requiredLetter) {
+    list<string>::const_iterator iter;
+    iter = wordList.begin();
+    while (iter != wordList.end()) {
+        if (iter->find(requiredLetter) == string::npos) {
+            iter = wordList.erase(iter);
+        } else {
+            iter++;
+        }
+    }
+}
+
+void removeWordsWithLetter(list<string> & wordList, char forbiddenLetter){
+    list<string>::const_iterator iter;
+    iter = wordList.begin();
+    while (iter != wordList.end()){
+        if (iter->find(forbiddenLetter) != string::npos){
+            iter= wordList.erase(iter);
+        } else {
+            iter++;
+        }
+    }
+}
+
+void mostFreqPatternByLetter(list<string> wordList, char letter,
+        list<int> & maxPattern,
+        int & maxPatternCount) {
+    removeWordsWithoutLetter(wordList, letter);
+    list<string>::iterator iter;
+    maxPatternCount = 0;
+    while (wordList.size() > 0){
+        iter = wordList.begin();
+        list<int> currentPattern;
+        for(int i = 0; i < iter->length(); i++){
+            //indexing a string
+            if((*iter)[i] == letter) {
+                currentPattern.push_back(i);
+            }
+        }
+        int currentPatternCount = 1;
+        iter = wordList.erase(iter);
+        //loop through wordlist again this time 
+        //counting how many match and removing the matches
+        while (iter != wordList.end()){
+            if (matchesPattern(*iter, letter,currentPattern)){
+                currentPatternCount++;
+                iter = wordList.erase(iter);
+            } else {
+                iter++;
+            }
+        }
+        if (currentPatternCount > maxPatternCount) {
+            maxPatternCount = currentPatternCount;
+            maxPattern = currentPattern;
+        }
+        currentPattern.clear();
+    }
+}
+
+void displayGuessedLetters(bool letters[26]){
+    cout << "Letters guessed: ";
+    for (int i = 0; i < 26; i++){
+        if (letters[i]) cout << (char)('a' + i) << " ";
+    }
+    cout << "\n";
+}
+
+
+int main (){
+    // set up the configuration
+    list<string> wordList = readWordFile("word_alpha.txt");
+    const int wordLength = 8;
+    const int maxMisses = 9;
+    int misses = 0;
+    int discoveredLetterCount = 0;
+    removeWordsOfWrongLength(wordList, wordLength);
+    char revealedWord[wordLength + 1] = "********";
+    bool guessedLetters[26];
+    for (int i = 0; i < 26; i++) guessedLetters[i] = false;
+    char nextLetter;
+    cout << "Word so far: " << revealedWord << "\n";
+    // set up the main game loop
+    while (discoveredLetterCount < wordLength && misses < maxMisses) {
+        cout << "Letter to guess: ";
+        cin >> nextLetter;
+        guessedLetters[nextLetter - 'a'] = true;
+    }
 }
