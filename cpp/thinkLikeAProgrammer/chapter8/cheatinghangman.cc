@@ -160,9 +160,23 @@ void displayGuessedLetters(bool letters[26]){
     cout << "\n";
 }
 
+list<string> reduceByPattern(const list<string> &wordList, char letter, list<int> pattern) {
+    list<string> newList;
+    list<string>::const_iterator iter;
+    iter = wordList.begin();
+    while (iter != wordList.end()) {
+        if (matchesPattern(*iter, letter, pattern)){
+            newList.push_back(*iter);
+        }
+        iter++;
+    }
+    return newList;
+}
+
 
 int main (){
     // set up the configuration
+    list<string>readWordFile(const string& filename);
     list<string> wordList = readWordFile("word_alpha.txt");
     const int wordLength = 8;
     const int maxMisses = 9;
@@ -179,5 +193,31 @@ int main (){
         cout << "Letter to guess: ";
         cin >> nextLetter;
         guessedLetters[nextLetter - 'a'] = true;
+        int missingCount = countWordsWithoutLetter(wordList, nextLetter);
+        list<int> nextPattern;
+        int nextPatternCount;
+        mostFreqPatternByLetter(wordList, nextLetter, nextPattern, nextPatternCount);
+        if (missingCount > nextPatternCount) {
+            removeWordsWithLetter(wordList, nextLetter);
+            misses++;
+        } else {
+            list<int>::iterator iter = nextPattern.begin();
+            while(iter != nextPattern.end()){
+                discoveredLetterCount++;
+                revealedWord[*iter] = nextLetter;
+                iter++;
+            }
+            wordList = reduceByPattern(wordList, nextLetter, nextPattern);
+        }
+        cout << "Word so far: " << revealedWord << "\n";
+        displayGuessedLetters(guessedLetters);
     }
+
+    if (misses == maxMisses){
+        cout << "Sorry. You lost. The word I was thinking of was '";
+        cout << (wordList.cbegin())->c_str() << "'.\n";
+    } else {
+        cout << "Great job. You win. Word was '" << revealedWord << "'.\n";
+    }
+    return 0;
 }
