@@ -1,3 +1,5 @@
+#define DOCTEST_CONFIG_IMPLEMENT
+#include "doctest.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -27,6 +29,10 @@ vector<string> getWords(const char* filename){
         words.push_back(temp);
     }
     return words;
+}
+TEST_CASE("getWords"){
+    vector<string> str = {"apple", "tea"};
+    CHECK(getWords("test.txt") == str);
 }
 
 //convert to hashmap
@@ -101,6 +107,9 @@ void test(){
 }
 
 int main(){
+    doctest::Context context;
+    int test_result = context.run();
+    if (context.shouldExit()) return test_result;
     test();
     return 0;
 }
