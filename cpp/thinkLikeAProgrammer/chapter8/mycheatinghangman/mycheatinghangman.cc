@@ -69,8 +69,20 @@ TEST_CASE("makeHash"){
 // signature: vector<string> -> vector<unordered_map<char, vector<int>>>
 // purpose: create hashmaps to access the pattern of each word
 // examples: given {"apple", "tea"}, expect 
-                    // {{"a": {0}, "p": {1,2}, "l" : {3}, "e": {4}},
-                    // {"t": {0}, "e":{1}, "a": {2}}}
+// {
+//     { 
+//         {'a', {0}},
+//         {'p', {1,2}},
+//         {'l', {3}},
+//         {'e', {4}} 
+//     }, {
+//         { 't', {0}},
+//         { 'e', {1}},
+//         { 'a', {2}},
+
+
+//     }
+// }
 // function header:
 vector<unordered_map<char, vector<int>>> processWords(vector<string> words){
     // template
@@ -79,6 +91,22 @@ vector<unordered_map<char, vector<int>>> processWords(vector<string> words){
         hashmaps.push_back(makeHash(words[i]));
     }
     return hashmaps;
+}
+TEST_CASE("processWords"){
+    vector<string> vec = {"apple", "tea"};
+    vector<unordered_map<char, vector<int>>> ans = {
+        { 
+            {'a', {0}},
+            {'p', {1,2}},
+            {'l', {3}},
+            {'e', {4}} 
+        }, {
+            { 't', {0}},
+            { 'e', {1}},
+            { 'a', {2}},
+        }
+    };
+    CHECK(processWords(vec) == ans);
 }
 
 
@@ -91,41 +119,10 @@ vector<unordered_map<char, vector<int>>> processWords(vector<string> words){
 
 // display list
 
-void test(){
-    // vector<string> test;
-    // test = getWords("words_alpha.txt");
-    // for (string str : test){
-    //     cout << str.c_str() << endl;
-    // }
-
-    // string test = "tea";
-    // unordered_map<char, vector<int>> testhash;
-    // testhash = makeHash(test);
-    // for (auto pair : testhash){
-    //     for (int i = 0; i < (int) pair.second.size(); i++){
-    //         cout << pair.first << " " << pair.second[i] << endl;
-    //     }
-    // }
-    
-    // vector<unordered_map<char, vector<int>>> testprocessedwords;
-    // testprocessedwords = processWords(getWords("test.txt"));
-    // for (int j = 0; j < (int)testprocessedwords.size(); j++){
-    //     for (auto pair : testprocessedwords[j]){
-    //         cout << pair.first << " ";
-    //         for (int i = 0; i < (int) pair.second.size(); i++){
-    //             cout << " " << pair.second[i];
-    //         }
-    //         cout << endl;
-    //     }
-    //     cout << endl;
-    // }
-
-}
 
 int main(){
     doctest::Context context;
     int test_result = context.run();
     if (context.shouldExit()) return test_result;
-    test();
     return 0;
 }
