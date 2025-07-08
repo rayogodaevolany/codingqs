@@ -38,7 +38,13 @@ TEST_CASE("getWords"){
 //convert to hashmap
 //signature: string -> unordered_map<char, vector<int>>
 //purpose: make a hashmap version of a string to access its indexes
-//example: given "apple", expect {"a": {0}, "p": {1,2}, "l" : {3}, "e": {4}}
+//example: given "apple", expect 
+    // unordered_map<char, vector<int>> hashA = {
+    //     {'a', {0}},
+    //     {'p', {1,2}},
+    //     {'l', {3}},
+    //     {'e', {4}}
+    // };
 // given "tea", expect {"t": {0}, "e":{1}, "a": {2}}}
 //function header:
 unordered_map<char, vector<int>> makeHash(string str){
@@ -47,6 +53,16 @@ unordered_map<char, vector<int>> makeHash(string str){
         hash[str[i]].push_back(i);
     }
     return hash;
+}
+TEST_CASE("makeHash"){
+    string a = "apple";
+    unordered_map<char, vector<int>> hashA = {
+        {'a', {0}},
+        {'p', {1,2}},
+        {'l', {3}},
+        {'e', {4}}
+    };
+    CHECK(makeHash(a) == hashA);
 }
 
 // convert collection of strings to collection of hashmaps(of the string)
