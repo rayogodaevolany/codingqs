@@ -1,4 +1,4 @@
-#!/bin/bash 
+#! usr/bin/env bash
 
 # Create new file with name
 if [ $# -eq 3 ]
@@ -30,7 +30,7 @@ if [ -f "$FILE" ]; then
     echo "Makefile exists"
 else
     echo "Makefile doesn't exist"
-    return 1 2>/dev/null || exit 1
+    return 1 2> /dev/null || exit 1
 fi
 
 # use sed to change the program name in the makefile

@@ -21,25 +21,12 @@ def checkHash(strhash):
             return False
     return True
 
-golf = {
-        "Nathalie": 15,
-        "Ray":16,
-        "Menno": 1
+dictionary = {
+        nathalie: 1,
+        Ray: 2
         }
 
-golf1 =["Nathalie", "Ray", "Menno"]
-golf2 =[15, 16, 1]
-
-    
-# loop through golf1, then find index
-x = 0
-while(golf1[x] != "Nathalie"):
-      x += 1
-print("Nathalie has " + str(golf2[x]))
-
-
-print("nathalie has " + str(golf["Nathalie"]))
-print("ray has " + str(golf["Ray"]))
+print(dictionary["nathalie"])
 
 str1 = "aaaaa"
 str2 = ""
