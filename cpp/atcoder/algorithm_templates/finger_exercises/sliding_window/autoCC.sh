@@ -1,11 +1,11 @@
-#! usr/bin/env bash
+#!/bin/bash 
 
 # Create new file with name
-if [ $# -eq 3 ]
+if [ $# -eq 1 ]
 then
-    filename="$(date +%Y%m%d)_abc_$1_$2_$3"
+    filename=$1
 else 
-    filename="$(date +%Y%m%d)_???_example"
+    return 0
 fi
 
 touch $filename.cc
@@ -54,7 +54,7 @@ if [ -f "$FILE" ]; then
     echo "Makefile exists"
 else
     echo "Makefile doesn't exist"
-    return 1 2> /dev/null || exit 1
+    return 1 2>/dev/null || exit 1
 fi
 
 # use sed to change the program name in the makefile
