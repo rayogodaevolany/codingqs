@@ -13,34 +13,22 @@ void solve (int n, int q, vector<ll> a, vector<ll> b, vector<vector<int>> querie
         sum+= min(a[i], b[i]);
     }
 
+
     // sum queries
     for (int i = 0; i < q; i++){
+
         ll symbol = queries[i][0];
         ll index = queries[i][1];
         ll replace = queries[i][2];
+        sum -= min(a[index], b[index]);
+
         if (symbol == 0){
-            if (a[index] <= b[index] && replace <= b[index]){
-                ll diff = a[index] - replace;
-                sum-=diff;
-                cout << sum << endl;
-            } else {
-                ll diff = b[index] - a[index];
-                sum+=diff;
-                cout << sum << endl;
-            }
             a[index] = replace;
         } else {
-            if (b[index] <= a[index] && replace <= a[index]){
-                ll diff = b[index] - replace;
-                sum-=diff;
-                cout << sum << endl;
-            } else {
-                ll diff = a[index] - b[index];
-                sum+=diff;
-                cout << sum << endl;
-            }
             b[index] = replace;
         }
+        sum += min(a[index], b[index]);
+        cout << sum << endl;
     }
 
 } 
